@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "533607290096",
+    "project_id": "app-kan",
+    "storage_bucket": "app-kan.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:533607290096:android:38df8d6682556e8d511e35",
+        "android_client_info": {
+          "package_name": "com.example.kan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "533607290096-81g34qj54tl942vn2gns4k02mmgkods0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCTDbcSTPjvNrY3XmKHs4KiynSoH5Y_zTw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "533607290096-81g34qj54tl942vn2gns4k02mmgkods0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
