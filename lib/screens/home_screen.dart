@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children:  [
                     InkWell(
                       onTap: (){
-                        Navigator.pushReplacementNamed(context, '/fahras_screen');
+                        Navigator.pushNamed(context, '/fahras_screen');
                       },
                       child: const CircleAvatar(
                         backgroundColor: Colors.green,
@@ -52,14 +52,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    CircleAvatar(
-                      backgroundColor: Colors.green,
-                      radius: 60,
-                      child: Text(
-                        'المفضلة',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                    InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, '/favorite_screen');
+                      },
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.green,
+                        radius: 60,
+                        child: Text(
+                          'المفضلة',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
@@ -95,20 +100,25 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children:  [
-                    const CircleAvatar(
-                      backgroundColor: Colors.green,
-                      radius: 60,
-                      child: Text(
-                        'من \nنحن',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
+                    InkWell(
+                      onTap: (){
+                        Navigator.pushNamed(context, '/who_screen');
+                      },
+                      child: const CircleAvatar(
+                        backgroundColor: Colors.green,
+                        radius: 60,
+                        child: Text(
+                          'من \nنحن',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ),
                     InkWell(
                       onTap: (){
-                        Navigator.pushNamed(context, '/person_screen');
+                        Navigator.pushNamed(context, '/features_screen');
                       },
                       child: const CircleAvatar(
                         backgroundColor: Colors.green,

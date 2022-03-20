@@ -1,5 +1,4 @@
 class Story {
-  late String? id;
   late String title;
   late String image;
   late String details;
