@@ -96,7 +96,7 @@ class _StoryScreenState extends State<StoryScreen> {
                                       );
                                     }else {
                                       await documentFavorite.doc(random.toString()).delete();
-                                    };
+                                    }
                                     setState(() {
                                       controller.selected = !controller.selected;
                                     });
