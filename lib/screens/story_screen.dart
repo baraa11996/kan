@@ -21,12 +21,31 @@ class StoryScreen extends StatefulWidget {
 class _StoryScreenState extends State<StoryScreen> {
   CollectionReference storyref = FirebaseFirestore.instance.collection("story");
   CollectionReference userref = FirebaseFirestore.instance.collection("user");
-  var documentFavorite = FirebaseFirestore.instance.collection('user').doc(SharedPrefController().getId).collection('favorite');
+  var documentFavorite = FirebaseFirestore.instance
+      .collection('user')
+      .doc(SharedPrefController().getId)
+      .collection('favorite');
   var random = Random().nextInt(100000);
   final SelectController controller = Get.put(
     SelectController(),
     // permanent: true,
   );
+
+  Future<bool> favoriteExists() async {
+    bool ok = true;
+    await documentFavorite.doc(random.toString()).get().then((doc) {
+      doc.exists ? ok = true : ok =  false;
+      print('check');
+    }
+    );
+    if (ok == true) {
+      print('Exist');
+
+    } else {
+      print('Error');
+    }
+    return ok;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +68,7 @@ class _StoryScreenState extends State<StoryScreen> {
             }
             if (snapshot.connectionState == ConnectionState.done) {
               Map<String, dynamic> data =
-                  snapshot.data!.data() as Map<String, dynamic>;
+              snapshot.data!.data() as Map<String, dynamic>;
               return Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -82,27 +101,36 @@ class _StoryScreenState extends State<StoryScreen> {
                           children: [
                             CircleAvatar(
                               backgroundColor: Colors.grey.shade200,
-                              child: GetBuilder<SelectController>(
-                                builder: (controller)=>IconButton(
-                                  padding: EdgeInsets.zero,
-                                  onPressed: () async {
-                                    if (controller.selected == true) {
-                                      await documentFavorite.doc(random.toString()).set(
-                                          {
-                                            'favName' : data['nameStory'],
-                                            'favBody' : data['body'],
-                                            'favImage' : data['image'],
-                                          }
-                                      );
-                                    }else {
-                                      await documentFavorite.doc(random.toString()).delete();
-                                    }
-                                    setState(() {
-                                      controller.selected = !controller.selected;
+                              child: IconButton(
+                                padding: EdgeInsets.zero,
+                                onPressed: () async {
+                                  bool x = await favoriteExists();
+                                  if (x == false) {
+                                    await documentFavorite
+                                        .doc(random.toString())
+                                        .set({
+                                      'favName': data['nameStory'],
+                                      'favBody': data['body'],
+                                      'favImage': data['image'],
                                     });
-                                    print(random);
-                                  },
-                                  icon: Icon(controller.selected ? Icons.favorite_border : Icons.favorite,color: Colors.redAccent,),
+                                  } else {
+                                    await documentFavorite
+                                        .doc(random.toString())
+                                        .delete();
+                                  }
+                                  setState(() {
+                                    // controller.selected = !controller.selected;
+                                  });
+                                  print(random);
+                                  print(x);
+                                },
+                                icon: Icon(
+                                  // x
+                                  //     ?
+                                  // Icons.favorite
+                                  //     :
+                                Icons.favorite_border,
+                                  color: Colors.redAccent,
                                 ),
                               ),
                             ),
@@ -132,7 +160,11 @@ class _StoryScreenState extends State<StoryScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(15.0),
-                          child: Text(data['body'],style: TextStyle(fontSize: 16.sp),textAlign: TextAlign.center,),
+                          child: Text(
+                            data['body'],
+                            style: TextStyle(fontSize: 16.sp),
+                            textAlign: TextAlign.center,
+                          ),
                         )
                       ],
                     ),
