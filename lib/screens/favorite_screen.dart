@@ -40,11 +40,10 @@ class FavoriteScreen extends StatelessWidget {
             //   return Center(child: Text('لا يوجد قصص في المفضلة',style: TextStyle(color: Colors.grey,fontSize: 25.sp),textAlign: TextAlign.center,));
             // }
             else if (snapshot.connectionState == ConnectionState.waiting) {
-              return Text('Loading');
-            } else if (snapshot.hasData && snapshot.data != null) {
-              print('snapshot.hasData && snapshot.data != null');
+              return const Center(child: CircularProgressIndicator(),);
+            } else if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
+              print('snapshot.hasData && snapshot.data!.docs.isNotEmpty');
               final data = snapshot.data;
-              // print('TEST => ${data!.docs[0]['favName']}');
               return ListView.builder(
                 itemCount: data!.size,
                 itemBuilder: (context, index) {

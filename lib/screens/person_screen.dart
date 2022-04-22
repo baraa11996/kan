@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 import 'package:image_picker/image_picker.dart';
+import 'package:kan/screens/auth/change_password.dart';
 import 'dart:io';
 import 'package:path/path.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -100,48 +101,44 @@ class _PersonScreenState extends State<PersonScreen> {
                               SizedBox(
                                 height: 10.h,
                               ),
-                              TextButton(
-                                onPressed: () async {
-                                  var imagepicked = await imagepicker.pickImage(
-                                      source: ImageSource.gallery);
+                              Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () async {
+                                      var imagepicked = await imagepicker.pickImage(
+                                          source: ImageSource.gallery);
 
-                                  File file = File(imagepicked!.path);
-                                  await FbStorageUsersController().uploadImage(
-                                    file: file,
-                                    context: context,
-                                    callBackUrl: ({
-                                      required String url,
-                                      required bool status,
-                                    }) {
+                                      File file = File(imagepicked!.path);
+                                      await FbStorageUsersController().uploadImage(
+                                        file: file,
+                                        context: context,
+                                        callBackUrl: ({
+                                          required String url,
+                                          required bool status,
+                                        }) {
 
-                                      print('URL => $url');
-                                      print('status => $status');
-                                      userref.doc(SharedPrefController().getId).update(
-                                        {
-                                          'image':url,
+                                          print('URL => $url');
+                                          print('status => $status');
+                                          userref.doc(SharedPrefController().getId).update(
+                                            {
+                                              'image':url,
+                                            },
+                                          );
+                                          setState(() {
+
+                                          });
                                         },
                                       );
-                                      setState(() {
-
-                                      });
                                     },
-                                  );
-
-
-                                  // if(imagepicked != null){
-                                  //   file = File(imagepicked.path);
-                                  //   var imagename = basename(imagepicked.path);
-                                  //   var refstorge = FirebaseStorage.instance.ref().child("fileName");
-                                  //
-                                  //   await refstorge.putFile(file);
-                                  //    url = await refstorge.getDownloadURL();
-                                  //    print('***************************************');
-                                  //    print('$url');
-                                  // }else{
-                                  //   print('Please choose image');
-                                  // }
-                                },
-                                child: Text('تغيير الصورة '),
+                                    child: Text('تغيير الصورة '),
+                                  ),
+                                  TextButton(
+                                    onPressed: (){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context) => const ChangePassword(),),);
+                                    },
+                                    child: Text('تغيير كلمة المرور'),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

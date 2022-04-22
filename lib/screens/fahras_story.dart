@@ -17,7 +17,7 @@ class _FahrasStoryScreenState extends State<FahrasStoryScreen> {
   final Stream<QuerySnapshot> storyref =
       FirebaseFirestore.instance.collection("story").snapshots();
 
- @override
+  @override
   void initState() {
     super.initState();
   }
@@ -28,58 +28,71 @@ class _FahrasStoryScreenState extends State<FahrasStoryScreen> {
       appBar: AppBar(
         toolbarHeight: 80.h,
         backgroundColor: Colors.redAccent,
-        title: Text(' فهرس القصص '),
+        title: const Text(' فهرس القصص '),
         centerTitle: true,
       ),
       body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
             image: AssetImage('images/back.jfif'),
-          )),
-          child: StreamBuilder(
-              stream: storyref,
-              builder: (
-                BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot,
-              ) {
-                if (snapshot.hasError) {
-                  return Text('Eroor');
-                }
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Text('Loading');
-                }
+          ),
+        ),
+        child: StreamBuilder(
+          stream: storyref,
+          builder: (
+            BuildContext context,
+            AsyncSnapshot<QuerySnapshot> snapshot,
+          ) {
+            if (snapshot.hasError) {
+              return Text('Eroor');
+            }
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
 
-                final data = snapshot.requireData;
-                return ListView.builder(
-                    itemCount: data.size,
-                    itemBuilder: (context, index) {
-                      return Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: InkWell(
-                            onTap: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                                return StoryScreen(docid: data.docs[index].id,);
-                              }),
-                              );
-                            },
-                            child: Container(
-                              height: 55.h,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade400,
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: Center(
-                                  child: Text(
-                                '${data.docs[index]['nameStory']}',
-                                style: TextStyle(color: Colors.white,fontSize: 18.sp,fontWeight: FontWeight.bold),
-                              )),
-                            ),
+            final data = snapshot.requireData;
+            return ListView.builder(
+              itemCount: data.size,
+              itemBuilder: (context, index) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) {
+                            return StoryScreen(
+                              docid: data.docs[index].id,
+                            );
+                          }),
+                        );
+                      },
+                      child: Container(
+                        height: 55.h,
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade400,
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '${data.docs[index]['nameStory']}',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.sp,
+                                fontWeight: FontWeight.bold),
                           ),
                         ),
-                      );
-                    });
-              })),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            );
+          },
+        ),
+      ),
     );
   }
 }

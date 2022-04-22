@@ -15,10 +15,11 @@ class FbAuthController with Helpers {
 
   CollectionReference userref = FirebaseFirestore.instance.collection("user");
 
-  Future<bool> signIn(
-      {required BuildContext context,
-      required String email,
-      required String password}) async {
+  Future<bool> signIn({
+    required BuildContext context,
+    required String email,
+    required String password,
+  }) async {
     try {
       UserCredential userCredential = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
@@ -29,9 +30,10 @@ class FbAuthController with Helpers {
           await userCredential.user!.sendEmailVerification();
           await signOut();
           showSnackBar(
-              context: context,
-              message: 'Email must be verified, check and try again!',
-              error: true);
+            context: context,
+            message: 'Email must be verified, check and try again!',
+            error: true,
+          );
         }
       }
     } on FirebaseAuthException catch (e) {
@@ -49,7 +51,7 @@ class FbAuthController with Helpers {
       required String lastname,
       required String email,
       String? uId,
-        required String date,
+      required String date,
       required String password}) async {
     try {
       UserCredential userCredential = await _firebaseAuth
@@ -74,11 +76,10 @@ class FbAuthController with Helpers {
         "email": email,
         "id": userCredential.user!.uid,
         "date": date,
-        "image":''
+        "image": ''
       });
       print(userCredential.user);
       await SharedPrefController().saveId(id: userCredential.user!.uid);
-
 
       await userCredential.user!.sendEmailVerification();
       await signOut();
@@ -144,5 +145,53 @@ class FbAuthController with Helpers {
     } else if (exception.code == 'weak-password') {
       //
     }
+  }
+
+  Future<bool> changePassword(
+    BuildContext context, {
+    required String currentPassword,
+    required String newPassword,
+  }) async {
+    var user = _firebaseAuth.currentUser;
+
+    user!.updatePassword(newPassword).then((_) {
+      showSnackBar(
+        context: context,
+        message: 'Password changed successfully!',
+        error: false,
+      );
+      return true;
+    }).catchError((err) {
+      showSnackBar(
+        context: context,
+        message: 'Error changing password!',
+        error: true,
+      );
+      return false;
+    });
+    return false;
+    // final cred = EmailAuthProvider.credential(
+    //   email: user!.email!,
+    //   password: currentPassword,
+    // );
+    // await user.reauthenticateWithCredential(cred).then((value) async {
+    //   await user.updatePassword(newPassword).then((_) {
+    //     showSnackBar(
+    //       context: context,
+    //       message: 'Password changed successfully!',
+    //       error: false,
+    //     );
+    //     return true;
+    //   }).catchError((error) {
+    //     showSnackBar(
+    //       context: context,
+    //       // message: 'Error changing password!',
+    //       message: error,
+    //       error: true,
+    //     );
+    //     return false;
+    //   });
+    // });
+    // return false;
   }
 }

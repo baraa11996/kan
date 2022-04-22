@@ -54,43 +54,43 @@ class _InputTextFieldState extends State<InputTextField> {
   @override
   Widget build(BuildContext context) {
     return TextField(
-      expands: true,
-      minLines: null,
-      maxLines: null,
+      // expands: true,
+      // minLines: null,
+      // maxLines: null,
       keyboardType: widget.textInputType ,
       focusNode: _focusNodes[0],
       controller: widget.controller,
       onChanged: widget.onChanged,
       showCursor: true,
-      obscureText: checkIcon() ? showPassword() : false,
+      obscureText: widget.obscure,
       // obscuringCharacter: '*',
 
       decoration: InputDecoration(
 
         contentPadding: EdgeInsets.zero,
-        constraints: BoxConstraints(
+        constraints: const BoxConstraints(
           maxHeight: 60,
           maxWidth: 300,
         ),
 
         prefixIcon: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: Text('${widget.prefixText}',style: TextStyle(color: Colors.grey),),
+          child: Text('${widget.prefixText}',style: const TextStyle(color: Colors.grey),),
         ),
         floatingLabelBehavior: FloatingLabelBehavior.always,
         hintText: widget.hintText,
         hintStyle: TextStyle(
           fontSize: 12.sp,
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: Colors.black,
         ),
         enabledBorder: getBorder(),
         suffixIcon: widget.hasIcon
             ? IconButton(
                 splashColor: Colors.transparent,
                 color: _focusNodes[0].hasFocus
-                    ? Color(0xff636363)
-                    : Color(0xffB0B0B0),
+                    ? const Color(0xff636363)
+                    : const Color(0xffB0B0B0),
                 onPressed: () {
                   setState(() {
                     _visibility ? _visibility = false : _visibility = true;
@@ -101,7 +101,7 @@ class _InputTextFieldState extends State<InputTextField> {
                 },
                 icon: _visibility
                     ? Icon(widget.icon)
-                    : Icon(Icons.visibility_off),
+                    : const Icon(Icons.visibility_off),
               )
             : null,
 

@@ -27,8 +27,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(375, 812),
-      builder: ()=>GetMaterialApp(
+      designSize: const Size(375, 812),
+      builder: () => GetMaterialApp(
+        debugShowCheckedModeBanner: false,
         textDirection: TextDirection.rtl,
         theme: ThemeData(
           fontFamily: 'Noto',
@@ -38,20 +39,20 @@ class MyApp extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        supportedLocales: const[
+        supportedLocales: const [
           Locale('ar'),
         ],
         initialRoute: ('/lunch_screen'),
         routes: {
-          '/lunch_screen' : (context) => const LunchScreen(),
-          '/signup_screen' : (context) => const SignUpScreen(),
-          '/signin_screen' : (context) => const SignInScreen(),
-          '/home_screen' : (context) => const HomeScreen(),
-          '/person_screen' : (context) => const PersonScreen(),
-          '/fahras_screen' : (context) => const FahrasStoryScreen(),
-          '/favorite_screen' : (context) =>  FavoriteScreen(),
-          '/who_screen' : (context) =>  const WhoScreen(),
-          '/features_screen' : (context) =>  const FeaturesScreen(),
+          '/lunch_screen': (context) => const LunchScreen(),
+          '/signup_screen': (context) => const SignUpScreen(),
+          '/signin_screen': (context) => const SignInScreen(),
+          '/home_screen': (context) => const HomeScreen(),
+          '/person_screen': (context) => const PersonScreen(),
+          '/fahras_screen': (context) => const FahrasStoryScreen(),
+          '/favorite_screen': (context) => FavoriteScreen(),
+          '/who_screen': (context) => const WhoScreen(),
+          '/features_screen': (context) => const FeaturesScreen(),
         },
       ),
     );
