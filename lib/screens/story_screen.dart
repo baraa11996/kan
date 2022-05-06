@@ -124,7 +124,7 @@ class _StoryScreenState extends State<StoryScreen> {
                                 fontSize: 20.sp,
                                 color: Colors.redAccent,
                                 fontWeight: FontWeight.bold,
-                              ),
+                              ),textAlign: TextAlign.center,
                             ),
                           ),
                           const SizedBox(width: 20),

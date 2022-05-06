@@ -23,6 +23,7 @@ class FbAuthController with Helpers {
     try {
       UserCredential userCredential = await _firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
+      await SharedPrefController().saveId(id: userCredential.user!.uid);
       if (userCredential.user != null) {
         if (userCredential.user!.emailVerified) {
           return true;
