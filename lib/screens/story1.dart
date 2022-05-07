@@ -119,7 +119,7 @@ class _StoryOneState extends State<StoryOne> {
             ),
           ],
         ),
-      );
+      ),
     );
   }
 }
