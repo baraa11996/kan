@@ -40,11 +40,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       onTap: (){
                         Navigator.pushNamed(context, '/fahras_screen');
                       },
-                      child: const CircleAvatar(
-                        backgroundColor: Colors.green,
-                        radius: 60,
+                      child:  Container(
+                        clipBehavior: Clip.hardEdge,
+                        width: 115.w,
+                        height: 115.h,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('images/bad.jpeg'),
+                          ),
+                          borderRadius: BorderRadius.circular(75),
+                          border: Border.all(
+                              color: Colors.green, width: 3.w),
+                        ),
                         child: Text(
-                          'فهرس \nالقصص',
+                          '',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
