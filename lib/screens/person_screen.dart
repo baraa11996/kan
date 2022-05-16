@@ -42,7 +42,7 @@ class _PersonScreenState extends State<PersonScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.redAccent,
-        title: Text('صفحة معلومات الطفل '),
+        title: Text('معلومات الطفل'),
         centerTitle: true,
         toolbarHeight: 80,
       ),
@@ -54,7 +54,7 @@ class _PersonScreenState extends State<PersonScreen> {
               return Text("Document does not exist");
             }
             if (snapshot.hasError) {
-              return Text('Eroor');
+              return Text('Error');
             }
             if (snapshot.connectionState == ConnectionState.done) {
               Map<String, dynamic> data =

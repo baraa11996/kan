@@ -88,28 +88,34 @@ class _StoryScreenState extends State<StoryScreen> {
                               child: StreamBuilder<QuerySnapshot>(
                                 stream: FBStoryController().story(),
                                 builder: (context, snapshot) {
-                                  if (snapshot.hasData && snapshot.data != null) {
+                                  if (snapshot.hasData &&
+                                      snapshot.data != null) {
                                     var favorites = snapshot.data!.docs;
                                     return IconButton(
                                       padding: EdgeInsets.zero,
                                       onPressed: () {
                                         if (favorites.indexWhere((element) =>
-                                                element.id == data['id']) ==
+                                                element.id == widget.docid) ==
                                             -1) {
-                                          documentFavorite.doc(data['id']).set({
-                                            'favName': data['nameStory'],
-                                            'favBody': data['body'],
-                                            'favImage': data['image'],
+                                          documentFavorite
+                                              .doc(widget.docid)
+                                              .set({
+                                            'nameStory': data['nameStory'],
+                                            'body': data['body'],
+                                            'image': data['image'],
+                                            'audio': data['audio'],
+                                            'id': data['id'],
                                           });
                                         } else {
                                           documentFavorite
-                                              .doc(data['id'])
+                                              .doc(widget.docid)
                                               .delete();
                                         }
                                       },
                                       icon: Icon(
                                         favorites.indexWhere((element) =>
-                                                    element.id == data['id']) !=
+                                                    element.id ==
+                                                    widget.docid) !=
                                                 -1
                                             ? Icons.favorite
                                             : Icons.favorite_border,
@@ -145,7 +151,8 @@ class _StoryScreenState extends State<StoryScreen> {
                                               await stopSound();
                                             }
                                           : () async {
-                                              await playSound(url: data['audio']);
+                                              await playSound(
+                                                  url: data['audio']);
                                             },
                                       icon: Icon(
                                         playing == 1
@@ -186,6 +193,7 @@ class _StoryScreenState extends State<StoryScreen> {
     await stopSound();
     return true;
   }
+
   Future<void> playSound({required String url}) async {
     int status = await playerFromLink.play(url);
     if (status == 1) {

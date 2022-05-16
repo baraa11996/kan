@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:kan/screens/story_screen.dart';
 
 import '../prefs/shared_prefs.dart';
 
@@ -40,7 +41,9 @@ class FavoriteScreen extends StatelessWidget {
             //   return Center(child: Text('لا يوجد قصص في المفضلة',style: TextStyle(color: Colors.grey,fontSize: 25.sp),textAlign: TextAlign.center,));
             // }
             else if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Center(child: CircularProgressIndicator(),);
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             } else if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
               print('snapshot.hasData && snapshot.data!.docs.isNotEmpty');
               final data = snapshot.data;
@@ -52,13 +55,16 @@ class FavoriteScreen extends StatelessWidget {
                       padding: const EdgeInsets.all(20.0),
                       child: InkWell(
                         onTap: () {
-                          // Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                          //   return StoryScreen(docid: data.docs[index].id,);
-                          // }),
-                          // );
+                          Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) {
+                              return StoryScreen(
+                                docid: data.docs[index].id,
+                              );
+                            }),
+                          );
                         },
                         child: Dismissible(
-                          onDismissed: (diraction) async {
+                          onDismissed: (_) async {
                             await documentFavorite
                                 .doc(data.docs[index].id)
                                 .delete();
@@ -79,7 +85,7 @@ class FavoriteScreen extends StatelessWidget {
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
                                         image: NetworkImage(
-                                          data.docs[index]['favImage'],
+                                          data.docs[index]['image'],
                                         ),
                                       ),
                                     ),
@@ -87,7 +93,7 @@ class FavoriteScreen extends StatelessWidget {
                                 ),
                                 Center(
                                   child: Text(
-                                    '${data.docs[index]['favName']}',
+                                    '${data.docs[index]['nameStory']}',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 18.sp,
@@ -105,7 +111,9 @@ class FavoriteScreen extends StatelessWidget {
                 },
               );
             } else {
-              return Center(child: Text('لا يوجد عناصر في المفضلة'),);
+              return Center(
+                child: Text('لا يوجد عناصر في المفضلة'),
+              );
             }
           },
         ),
